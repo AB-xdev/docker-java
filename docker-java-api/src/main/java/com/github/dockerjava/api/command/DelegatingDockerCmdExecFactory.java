@@ -216,6 +216,11 @@ public class DelegatingDockerCmdExecFactory implements DockerCmdExecFactory {
     }
 
     @Override
+    public BuildImageV2Cmd.Exec createBuildImageV2CmdExec() {
+        return getDockerCmdExecFactory().createBuildImageV2CmdExec();
+    }
+
+    @Override
     public TopContainerCmd.Exec createTopContainerCmdExec() {
         return getDockerCmdExecFactory().createTopContainerCmdExec();
     }

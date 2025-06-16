@@ -1,0 +1,80 @@
+/*
+ * Created on 21.07.2015
+ */
+package com.github.dockerjava.api.command;
+
+import com.github.dockerjava.api.async.ResultCallbackTemplate;
+import com.github.dockerjava.api.exception.DockerClientException;
+import com.github.dockerjava.api.model.BuildResponseV2Item;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.concurrent.TimeUnit;
+
+/**
+ *
+ * @author Marcus Linke
+ *
+ */
+public class BuildImageV2ResultCallback extends ResultCallbackTemplate<BuildImageV2ResultCallback, BuildResponseV2Item> {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(BuildImageV2ResultCallback.class);
+
+    private String imageId;
+
+    private String error;
+
+    @Override
+    public void onNext(BuildResponseV2Item item) {
+        if (item.isBuildSuccessIndicated()) {
+            this.imageId = item.getImageId();
+        } else if (item.isErrorIndicated()) {
+            this.error = item.getError();
+        }
+        LOGGER.debug("{}", item);
+    }
+
+    /**
+     * Awaits the image id from the response stream.
+     *
+     * @throws DockerClientException
+     *             if the build fails.
+     */
+    public String awaitImageId() {
+        try {
+            awaitCompletion();
+        } catch (InterruptedException e) {
+            throw new DockerClientException("", e);
+        }
+
+        return getImageId();
+    }
+
+    /**
+     * Awaits the image id from the response stream.
+     *
+     * @throws DockerClientException
+     *             if the build fails or the timeout occurs.
+     */
+    public String awaitImageId(long timeout, TimeUnit timeUnit) {
+        try {
+            awaitCompletion(timeout, timeUnit);
+        } catch (InterruptedException e) {
+            throw new DockerClientException("Awaiting image id interrupted: ", e);
+        }
+
+        return getImageId();
+    }
+
+    private String getImageId() {
+        if (error != null) {
+            throw new DockerClientException("Could not build image: " + error);
+        }
+
+        if (imageId != null) {
+            return imageId;
+        }
+
+        throw new DockerClientException("Could not build image");
+    }
+}

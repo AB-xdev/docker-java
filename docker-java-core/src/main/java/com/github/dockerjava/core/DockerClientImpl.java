@@ -4,6 +4,7 @@ import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.command.AttachContainerCmd;
 import com.github.dockerjava.api.command.AuthCmd;
 import com.github.dockerjava.api.command.BuildImageCmd;
+import com.github.dockerjava.api.command.BuildImageV2Cmd;
 import com.github.dockerjava.api.command.CommitCmd;
 import com.github.dockerjava.api.command.ConnectToNetworkCmd;
 import com.github.dockerjava.api.command.ContainerDiffCmd;
@@ -91,6 +92,7 @@ import com.github.dockerjava.api.model.SwarmSpec;
 import com.github.dockerjava.core.command.AttachContainerCmdImpl;
 import com.github.dockerjava.core.command.AuthCmdImpl;
 import com.github.dockerjava.core.command.BuildImageCmdImpl;
+import com.github.dockerjava.core.command.BuildImageV2CmdImpl;
 import com.github.dockerjava.core.command.CommitCmdImpl;
 import com.github.dockerjava.core.command.ConnectToNetworkCmdImpl;
 import com.github.dockerjava.core.command.ContainerDiffCmdImpl;
@@ -525,6 +527,21 @@ public class DockerClientImpl implements Closeable, DockerClient {
     @Override
     public BuildImageCmd buildImageCmd(InputStream tarInputStream) {
         return new BuildImageCmdImpl(getDockerCmdExecFactory().createBuildImageCmdExec(), tarInputStream);
+    }
+
+    @Override
+    public BuildImageV2Cmd buildImageV2Cmd() {
+        return new BuildImageV2CmdImpl(getDockerCmdExecFactory().createBuildImageV2CmdExec());
+    }
+
+    @Override
+    public BuildImageV2Cmd buildImageV2Cmd(File dockerFileOrFolder) {
+        return new BuildImageV2CmdImpl(getDockerCmdExecFactory().createBuildImageV2CmdExec(), dockerFileOrFolder);
+    }
+
+    @Override
+    public BuildImageV2Cmd buildImageV2Cmd(InputStream tarInputStream) {
+        return new BuildImageV2CmdImpl(getDockerCmdExecFactory().createBuildImageV2CmdExec(), tarInputStream);
     }
 
     @Override

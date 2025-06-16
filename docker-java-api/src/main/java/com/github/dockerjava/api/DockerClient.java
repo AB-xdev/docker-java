@@ -3,6 +3,7 @@ package com.github.dockerjava.api;
 import com.github.dockerjava.api.command.AttachContainerCmd;
 import com.github.dockerjava.api.command.AuthCmd;
 import com.github.dockerjava.api.command.BuildImageCmd;
+import com.github.dockerjava.api.command.BuildImageV2Cmd;
 import com.github.dockerjava.api.command.CommitCmd;
 import com.github.dockerjava.api.command.ConnectToNetworkCmd;
 import com.github.dockerjava.api.command.ContainerDiffCmd;
@@ -276,6 +277,12 @@ public interface DockerClient extends Closeable {
     BuildImageCmd buildImageCmd(File dockerFileOrFolder);
 
     BuildImageCmd buildImageCmd(InputStream tarInputStream);
+
+    BuildImageV2Cmd buildImageV2Cmd();
+
+    BuildImageV2Cmd buildImageV2Cmd(File dockerFileOrFolder);
+
+    BuildImageV2Cmd buildImageV2Cmd(InputStream tarInputStream);
 
     TopContainerCmd topContainerCmd(String containerId);
 

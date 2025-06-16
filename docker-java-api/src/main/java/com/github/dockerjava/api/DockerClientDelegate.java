@@ -3,6 +3,7 @@ package com.github.dockerjava.api;
 import com.github.dockerjava.api.command.AttachContainerCmd;
 import com.github.dockerjava.api.command.AuthCmd;
 import com.github.dockerjava.api.command.BuildImageCmd;
+import com.github.dockerjava.api.command.BuildImageV2Cmd;
 import com.github.dockerjava.api.command.CommitCmd;
 import com.github.dockerjava.api.command.ConnectToNetworkCmd;
 import com.github.dockerjava.api.command.ContainerDiffCmd;
@@ -330,6 +331,21 @@ public class DockerClientDelegate implements DockerClient {
     @Override
     public BuildImageCmd buildImageCmd(InputStream tarInputStream) {
         return getDockerClient().buildImageCmd(tarInputStream);
+    }
+
+    @Override
+    public BuildImageV2Cmd buildImageV2Cmd() {
+        return getDockerClient().buildImageV2Cmd();
+    }
+
+    @Override
+    public BuildImageV2Cmd buildImageV2Cmd(File dockerFileOrFolder) {
+        return getDockerClient().buildImageV2Cmd(dockerFileOrFolder);
+    }
+
+    @Override
+    public BuildImageV2Cmd buildImageV2Cmd(InputStream tarInputStream) {
+        return getDockerClient().buildImageV2Cmd(tarInputStream);
     }
 
     @Override

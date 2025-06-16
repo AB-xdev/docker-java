@@ -5,6 +5,7 @@ import java.util.Objects;
 import com.github.dockerjava.api.command.AttachContainerCmd;
 import com.github.dockerjava.api.command.AuthCmd;
 import com.github.dockerjava.api.command.BuildImageCmd;
+import com.github.dockerjava.api.command.BuildImageV2Cmd;
 import com.github.dockerjava.api.command.CommitCmd;
 import com.github.dockerjava.api.command.ConnectToNetworkCmd;
 import com.github.dockerjava.api.command.ContainerDiffCmd;
@@ -87,6 +88,7 @@ import com.github.dockerjava.api.command.WaitContainerCmd;
 import com.github.dockerjava.core.exec.AttachContainerCmdExec;
 import com.github.dockerjava.core.exec.AuthCmdExec;
 import com.github.dockerjava.core.exec.BuildImageCmdExec;
+import com.github.dockerjava.core.exec.BuildImageV2CmdExec;
 import com.github.dockerjava.core.exec.CommitCmdExec;
 import com.github.dockerjava.core.exec.ConnectToNetworkCmdExec;
 import com.github.dockerjava.core.exec.ContainerDiffCmdExec;
@@ -403,6 +405,11 @@ public abstract class AbstractDockerCmdExecFactory implements DockerCmdExecFacto
     @Override
     public BuildImageCmd.Exec createBuildImageCmdExec() {
         return new BuildImageCmdExec(getBaseResource(), getDockerClientConfig());
+    }
+
+    @Override
+    public BuildImageV2Cmd.Exec createBuildImageV2CmdExec() {
+        return new BuildImageV2CmdExec(getBaseResource(), getDockerClientConfig());
     }
 
     @Override
